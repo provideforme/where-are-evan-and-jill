@@ -2,6 +2,7 @@ import React from "react";
 import { createCustomEqual } from "fast-equals";
 import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 
+
 interface MapProps extends google.maps.MapOptions {
   style: { [key: string]: string };
   onClick?: (e: google.maps.MapMouseEvent) => void;
@@ -93,11 +94,8 @@ function useDeepCompareEffectForMaps(
   callback: React.EffectCallback,
   dependencies: any[]
 ) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(callback, dependencies.map(useDeepCompareMemoize));
 }
-
-// window.addEventListener("DOMContentLoaded", () => {
-//   ReactDom.render(<App />, document.getElementById("root"));
-// });
 
 export default Map;

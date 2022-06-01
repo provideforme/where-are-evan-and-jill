@@ -78,7 +78,7 @@ const App: React.FC = () => {
   return (
     <>
     <div style={{ display: "flex", height: "100%" }}>
-      <Wrapper apiKey={process.env.GOOGLE_API_KEY!} render={render}>
+      <Wrapper apiKey={"process.env.REACT_APP_GOOGLE_API_KEY"} render={render}>
         <Map
           center={center}
           onClick={onClick}
