@@ -1,12 +1,16 @@
 import * as React from "react";
 import Map from "./components/Map/Map";
 import Marker from "./components/Marker/Marker";
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
+// import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import "./styles/App.css"; 
+import { loadMapApi } from "./components/utils/GoogleMapsutils";
+import { useEffect, useState } from "react";
 
-const render = (status: Status) => {
-  return <h1>{status}</h1>;
-};
+// const render = (status: Status) => {
+//   return <h1>{status}</h1>;
+// };
+
+
 
 const App: React.FC = () => {
   // App state
@@ -75,10 +79,19 @@ const App: React.FC = () => {
     </div>
   );
 
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
+  useEffect(() => {
+    const googleMapScript = loadMapApi();
+    googleMapScript.addEventListener('load', function(){
+      setScriptLoaded(true);
+    })
+  }, []);
+
   return (
     <>
     <div style={{ display: "flex", height: "100%" }}>
-      <Wrapper apiKey={"process.env.REACT_APP_GOOGLE_API_KEY"} render={render}>
+      {scriptLoaded && (
         <Map
           center={center}
           onClick={onClick}
@@ -90,7 +103,7 @@ const App: React.FC = () => {
             <Marker key={i} position={latLng} />
           ))}
         </Map>
-      </Wrapper>
+      )}
       {/* Basic form for controlling center and zoom of map. */}
       {form}
     </div>
